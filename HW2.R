@@ -120,30 +120,25 @@ BIAS1
 
 
 #################################
-## 2. "Partialing attempts to determine the degree of association between two variables that would exist if all influences of one or more other variables could be removed. A partial correlation coefficient is a way of expressing the unique relationship between the criterion and a predictor." 
+## 2. In the data below is the association between X and Y a consequent of common cause Z? Give a point estimate, corresponding scatterplot, and 95% confidence interval for the appropriate partial correlation. Does the partial correlation coefficient settle the causal question?
 
-## In the data below is the association between X and Y a consequent of common cause Z? Give a point estimate, corresponding scatterplot, and 95% confidence interval for the appropriate partial correlation. Does the partial correlation coefficient settle the causal question?
 
 install.packages("ppcor")
 library(ppcor)
 
 data <- read.table("data.txt", header=T)
-
 data$Row <- NULL
-
 attach(data)
-
-
-data
-
 
 pcor.test(Y, X, Z)
 
 ## partial correlation point estimate: -0.1198
-
 ## Do it by hand to check: (Yup it works!)
 
 (cor(Y,X) - cor(Y,Z)*cor(X,Z)) / sqrt((1 - cor(Y,Z)^2)*(1 - cor(X,Z)^2))
+
+
+## Scatterplot of residuals (association goes away):
 
 cor.test(residuals(lm(Y ~ Z)), residuals(lm(X ~ Z)))
 
@@ -154,8 +149,10 @@ plot(residuals(lm(Y ~ Z)), residuals(lm(X ~ Z)))
 
 
 
-###################################
-## Number 3
+#################################
+## 3. Spurious Correlation
+
+## Use sobel function to look at effect of momed on vach with tverb as a mediating variable.
 
 
 data <- read.table("coleman.dat")
@@ -170,4 +167,3 @@ names(data)
 
 sobel(momed, tverb, vach)
 
-summary(lm(vach ~ momed*tverb))
