@@ -155,4 +155,19 @@ plot(residuals(lm(Y ~ Z)), residuals(lm(X ~ Z)))
 
 
 ###################################
+## Number 3
 
+
+data <- read.table("coleman.dat")
+
+install.packages("multilevel")
+library(multilevel)
+
+attach(data)
+names(data)
+
+?sobel
+
+sobel(momed, tverb, vach)
+
+summary(lm(vach ~ momed*tverb))
